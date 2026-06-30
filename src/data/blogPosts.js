@@ -7,7 +7,7 @@ const blogPosts = [
     description:
       "Meet Yejun, the warm leader of PLAVE whose voice and energy make every performance feel special.",
     author: "Shogun",
-    date: "30 June 2026",
+    date: "18 June 2026",
     likes: 421,
   },
   {
@@ -18,7 +18,7 @@ const blogPosts = [
     description:
       "Looking back on how PLAVE's music became part of my daily life and why their songs continue to inspire me.",
     author: "Shogun",
-    date: "30 June 2026",
+    date: "22 June 2026",
     likes: 356,
   },
   {
@@ -29,7 +29,7 @@ const blogPosts = [
     description:
       "Noah’s vocal tone has a gentle charm that can make a song feel emotional, soft, and unforgettable.",
     author: "Shogun",
-    date: "30 June 2026",
+    date: "24 June 2026",
     likes: 389,
   },
   {
@@ -40,7 +40,7 @@ const blogPosts = [
     description:
       "From live stages to small details in their performances, PLAVE always knows how to make fans smile.",
     author: "Shogun",
-    date: "30 June 2026",
+    date: "26 June 2026",
     likes: 512,
   },
   {
@@ -51,7 +51,7 @@ const blogPosts = [
     description:
       "Being a fan is not about doing everything perfectly. It is about finding joy, comfort, and inspiration.",
     author: "Shogun",
-    date: "30 June 2026",
+    date: "28 June 2026",
     likes: 274,
   },
   {
