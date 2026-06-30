@@ -1,6 +1,6 @@
 function NavBar() {
   return (
-    <nav className="mx-auto mt-6 flex w-[92%] max-w-5xl items-center justify-between rounded-full bg-white px-4 py-3 shadow-sm sm:px-6">
+    <nav className="mx-auto  flex w-[92%] max-w-5xl items-center justify-between rounded-full bg-white px-4 py-3 shadow-sm sm:px-6">
       <h2 className="text-xl font-bold text-gray-900">PLAVElog</h2>
 
       <div className="flex shrink-0 gap-2">

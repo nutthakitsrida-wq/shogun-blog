@@ -46,7 +46,7 @@ const blogPosts = [
   {
     id: 5,
     image: "/images/plave-5.jpg",
-    category: "Fan Life",
+    category: "Diary",
     title: "Being a PLLI in My Own Way",
     description:
       "Being a fan is not about doing everything perfectly. It is about finding joy, comfort, and inspiration.",

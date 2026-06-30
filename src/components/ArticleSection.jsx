@@ -10,6 +10,8 @@ import {
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
+const categories = ["Highlight", "Members", "Music", "Performance", "Diary"];
+
 function ArticleSection() {
   return (
     <section className="mx-auto mt-20 w-[90%] max-w-5xl rounded-3xl bg-white p-8 shadow-sm">
@@ -23,21 +25,18 @@ function ArticleSection() {
 
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="hidden flex-wrap gap-3 md:flex">
-          <button className="rounded-full bg-violet-600 px-4 py-2 text-white">
-            Highlight
-          </button>
-          <button className="rounded-full border border-violet-200 px-4 py-2 hover:bg-violet-50">
-            Members
-          </button>
-          <button className="rounded-full border border-violet-200 px-4 py-2 hover:bg-violet-50">
-            Music
-          </button>
-          <button className="rounded-full border border-violet-200 px-4 py-2 hover:bg-violet-50">
-            Performance
-          </button>
-          <button className="rounded-full border border-violet-200 px-4 py-2 hover:bg-violet-50">
-            Diary
-          </button>
+          {categories.map((category, index) => (
+            <button
+              key={category}
+              className={`rounded-full px-4 py-2 ${
+                index === 0
+                  ? "bg-violet-600 text-white"
+                  : "border border-violet-200 hover:bg-violet-50"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
 
         <div className="relative w-full md:w-72">
@@ -53,17 +52,17 @@ function ArticleSection() {
             Category
           </label>
 
-          <Select>
+          <Select defaultValue="Highlight">
             <SelectTrigger>
               <SelectValue placeholder="Highlight" />
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem value="highlight">Highlight</SelectItem>
-              <SelectItem value="members">Members</SelectItem>
-              <SelectItem value="music">Music</SelectItem>
-              <SelectItem value="performance">Performance</SelectItem>
-              <SelectItem value="diary">Diary</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
