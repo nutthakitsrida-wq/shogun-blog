@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BlogCard from "./BlogCard";
 import blogPosts from "../data/blogPosts";
 import {
@@ -13,8 +14,15 @@ import { Input } from "@/components/ui/input";
 const categories = ["Highlight", "Members", "Music", "Performance", "Diary"];
 
 function ArticleSection() {
+  const [selectedCategory, setSelectedCategory] = useState("Highlight");
+
+  const filteredPosts =
+  selectedCategory === "Highlight"
+    ? blogPosts.filter((post) => post.highlight)
+    : blogPosts.filter((post) => post.category === selectedCategory);
+
   return (
-    <section className="mx-auto mt-20 w-[90%] max-w-5xl rounded-3xl bg-white p-8 shadow-sm">
+    <section className="mx-auto mt-20 w-[90%] max-w-5xl rounded-3xl bg-white p-8 shadow-2xl">
       <h2 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">
         PLAVE Blog
       </h2>
@@ -25,13 +33,15 @@ function ArticleSection() {
 
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="hidden flex-wrap gap-3 md:flex">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <button
               key={category}
-              className={`rounded-full px-4 py-2 ${
-                index === 0
+              disabled={selectedCategory === category}
+              onClick={() => setSelectedCategory(category)}
+              className={`rounded-full px-4 py-2 transition ${
+                selectedCategory === category
                   ? "bg-violet-600 text-white"
-                  : "border border-violet-200 hover:bg-violet-50"
+                  : "border border-violet-200 text-violet-700 hover:bg-violet-50"
               }`}
             >
               {category}
@@ -52,7 +62,10 @@ function ArticleSection() {
             Category
           </label>
 
-          <Select defaultValue="Highlight">
+          <Select
+            value={selectedCategory}
+            onValueChange={setSelectedCategory}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Highlight" />
             </SelectTrigger>
@@ -69,7 +82,7 @@ function ArticleSection() {
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-        {blogPosts.map((post) => (
+        {filteredPosts.map((post) => (
           <BlogCard
             key={post.id}
             image={post.image}
