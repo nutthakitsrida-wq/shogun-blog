@@ -1,17 +1,23 @@
-import ArticleSection from "./components/ArticleSection";
-import Footer from "./components/Footer";
-import NavBar from "./components/Navbar";
-import HeroSection from "./components/HeroSection";
-
+import NotFoundPage from "./pages/NotFoundPage";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import ViewPostPage from "./pages/ViewPostPage";
 
 function App() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#050816] via-[#101A3D] to-[#2A1458] py-8">
-      <NavBar />
-      <HeroSection />
-      <ArticleSection />
-      <Footer />
-    </main>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+
+      <Route
+        path="/posts/:postId"
+        element={<ViewPostPage />}
+      />
+
+      <Route
+        path="*"
+        element={<NotFoundPage />}
+      />
+    </Routes>
   );
 }
 

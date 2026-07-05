@@ -92,11 +92,10 @@ function ArticleSection() {
               key={category}
               disabled={selectedCategory === category}
               onClick={() => setSelectedCategory(category)}
-              className={`rounded-full px-4 py-2 transition ${
-                selectedCategory === category
-                  ? "bg-violet-600 text-white"
-                  : "border border-violet-200 text-violet-700 hover:bg-violet-50"
-              }`}
+              className={`rounded-full px-4 py-2 transition ${selectedCategory === category
+                ? "bg-violet-600 text-white"
+                : "border border-violet-200 text-violet-700 hover:bg-violet-50"
+                }`}
             >
               {category}
             </button>
@@ -143,6 +142,7 @@ function ArticleSection() {
         {filteredPosts.map((post) => (
           <BlogCard
             key={post.id}
+            id={post.id}
             image={post.image}
             category={post.category}
             title={post.title}

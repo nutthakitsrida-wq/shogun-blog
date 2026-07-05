@@ -1,8 +1,10 @@
-function BlogCard({ image, category, title, description, author, date }) {
+import { Link } from "react-router-dom";
+
+function BlogCard({ id, image, category, title, description, author, date }) {
   return (
     <div className="flex flex-col gap-4">
-      <a
-        href="#"
+      <Link
+        to={`/posts/${id}`}
         className="relative block h-[300px] overflow-hidden rounded-xl"
       >
         <img
@@ -10,7 +12,7 @@ function BlogCard({ image, category, title, description, author, date }) {
           src={image}
           alt={title}
         />
-      </a>
+      </Link>
 
       <div className="flex flex-col">
         <div className="flex">
@@ -19,11 +21,11 @@ function BlogCard({ image, category, title, description, author, date }) {
           </span>
         </div>
 
-        <a href="#">
+        <Link to={`/posts/${id}`}>
           <h2 className="mb-2 line-clamp-2 text-start text-xl font-bold text-gray-900 hover:text-violet-600">
             {title}
           </h2>
-        </a>
+        </Link>
 
         <p className="text-muted-foreground mb-4 line-clamp-3 text-sm">
           {description}
