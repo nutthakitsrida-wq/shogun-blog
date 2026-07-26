@@ -7,6 +7,8 @@ import ViewPostPage from "./pages/ViewPostPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignupPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage";
+import ArticlesPage from "./pages/admin/ArticlesPage";
+import ArticleFormPage from "./pages/admin/ArticleFormPage";
 
 function App() {
   return (
@@ -41,15 +43,9 @@ function App() {
             />
           }
         />
-        <Route
-          path="articles"
-          element={
-            <AdminPlaceholder
-              title="Articles"
-              description="Create and manage articles."
-            />
-          }
-        />
+        <Route path="articles" element={<ArticlesPage />} />
+        <Route path="articles/new" element={<ArticleFormPage />} />
+        <Route path="articles/:articleId/edit" element={<ArticleFormPage />} />
         <Route
           path="categories"
           element={
