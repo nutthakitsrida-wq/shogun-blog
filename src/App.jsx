@@ -11,6 +11,7 @@ import ArticlesPage from "./pages/admin/ArticlesPage";
 import ArticleFormPage from "./pages/admin/ArticleFormPage";
 import CategoriesPage from "./pages/admin/CategoriesPage";
 import CategoryFormPage from "./pages/admin/CategoryFormPage";
+import NotificationsPage from "./pages/admin/NotificationsPage";
 
 function App() {
   return (
@@ -52,15 +53,7 @@ function App() {
         <Route path="categories/new" element={<CategoryFormPage />} />
         <Route path="categories/:categoryId/edit" element={<CategoryFormPage />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route
-          path="notifications"
-          element={
-            <AdminPlaceholder
-              title="Notifications"
-              description="Review recent activity."
-            />
-          }
-        />
+        <Route path="notifications" element={<NotificationsPage />} />
         <Route path="reset-password" element={<ResetPasswordPage />} />
       </Route>
       
