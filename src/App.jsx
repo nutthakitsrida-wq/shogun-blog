@@ -9,6 +9,8 @@ import SignUpPage from "./pages/SignupPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage";
 import ArticlesPage from "./pages/admin/ArticlesPage";
 import ArticleFormPage from "./pages/admin/ArticleFormPage";
+import CategoriesPage from "./pages/admin/CategoriesPage";
+import CategoryFormPage from "./pages/admin/CategoryFormPage";
 
 function App() {
   return (
@@ -46,15 +48,9 @@ function App() {
         <Route path="articles" element={<ArticlesPage />} />
         <Route path="articles/new" element={<ArticleFormPage />} />
         <Route path="articles/:articleId/edit" element={<ArticleFormPage />} />
-        <Route
-          path="categories"
-          element={
-            <AdminPlaceholder
-              title="Categories"
-              description="Organize article categories."
-            />
-          }
-        />
+        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="categories/new" element={<CategoryFormPage />} />
+        <Route path="categories/:categoryId/edit" element={<CategoryFormPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route
           path="notifications"
