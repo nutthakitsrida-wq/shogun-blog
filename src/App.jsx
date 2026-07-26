@@ -1,4 +1,4 @@
-import DashboardLayout from "./pages/DashboardLayout";
+import DashboardLayout, { AdminPlaceholder } from "./pages/DashboardLayout";
 import ProfilePage from "./pages/ProfilePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import { Routes, Route } from "react-router-dom";
@@ -7,7 +7,6 @@ import ViewPostPage from "./pages/ViewPostPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignupPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage";
-import AdminPage from "./components/ui/AdminPage";
 
 function App() {
   return (
@@ -30,6 +29,46 @@ function App() {
       />
       <Route path="/account" element={<DashboardLayout />}>
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="reset-password" element={<ResetPasswordPage />} />
+      </Route>
+      <Route path="/admin" element={<DashboardLayout />}>
+        <Route
+          index
+          element={
+            <AdminPlaceholder
+              title="Dashboard"
+              description="Manage your publication from one place."
+            />
+          }
+        />
+        <Route
+          path="articles"
+          element={
+            <AdminPlaceholder
+              title="Articles"
+              description="Create and manage articles."
+            />
+          }
+        />
+        <Route
+          path="categories"
+          element={
+            <AdminPlaceholder
+              title="Categories"
+              description="Organize article categories."
+            />
+          }
+        />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route
+          path="notifications"
+          element={
+            <AdminPlaceholder
+              title="Notifications"
+              description="Review recent activity."
+            />
+          }
+        />
         <Route path="reset-password" element={<ResetPasswordPage />} />
       </Route>
       
