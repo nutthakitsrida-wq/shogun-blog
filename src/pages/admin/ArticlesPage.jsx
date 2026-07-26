@@ -1,6 +1,6 @@
 import { Edit3, FilePlus2, Search, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,12 +11,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { getArticles, saveArticles } from "@/lib/adminStorage";
+import { addNotification, getArticles, saveArticles } from "@/lib/adminStorage";
 
 function ArticlesPage() {
   const [articles, setArticles] = useState(getArticles);
   const [query, setQuery] = useState("");
-  const [status, setStatus] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [status, setStatus] = useState(() => {
+    const requestedStatus = searchParams.get("status");
+    return ["draft", "published"].includes(requestedStatus)
+      ? requestedStatus
+      : "all";
+  });
   const [category, setCategory] = useState("all");
   const [articleToDelete, setArticleToDelete] = useState(null);
   const location = useLocation();
@@ -39,7 +45,19 @@ function ArticlesPage() {
     const updated = articles.filter((article) => article.id !== articleToDelete.id);
     setArticles(updated);
     saveArticles(updated);
+    addNotification(`${articleToDelete.title} was deleted.`, "/admin/articles");
     setArticleToDelete(null);
+  }
+
+  function handleStatusChange(event) {
+    const nextStatus = event.target.value;
+    setStatus(nextStatus);
+    setSearchParams((current) => {
+      const updated = new URLSearchParams(current);
+      if (nextStatus === "all") updated.delete("status");
+      else updated.set("status", nextStatus);
+      return updated;
+    });
   }
 
   return (
@@ -75,7 +93,7 @@ function ArticlesPage() {
         <select
           aria-label="Filter by status"
           value={status}
-          onChange={(event) => setStatus(event.target.value)}
+          onChange={handleStatusChange}
           className="rounded-xl border border-slate-200 px-4 py-3"
         >
           <option value="all">All statuses</option>

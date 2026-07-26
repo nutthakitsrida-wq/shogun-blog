@@ -11,7 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { getArticles, getCategories, saveCategories } from "@/lib/adminStorage";
+import {
+  addNotification,
+  getArticles,
+  getCategories,
+  saveArticles,
+  saveCategories,
+} from "@/lib/adminStorage";
 
 function CategoriesPage() {
   const [categories, setCategories] = useState(getCategories);
@@ -26,9 +32,35 @@ function CategoriesPage() {
   }, [categories, query]);
 
   function confirmDelete() {
-    const updated = categories.filter((item) => item.id !== categoryToDelete.id);
-    saveCategories(updated);
-    setCategories(updated);
+    const affectedArticles = articles.filter(
+      (article) => article.category === categoryToDelete.name
+    );
+    let updatedCategories = categories.filter(
+      (item) => item.id !== categoryToDelete.id
+    );
+
+    if (affectedArticles.length > 0) {
+      if (!updatedCategories.some((item) => item.name === "Uncategorized")) {
+        updatedCategories = [
+          ...updatedCategories,
+          { id: "uncategorized", name: "Uncategorized" },
+        ];
+      }
+      saveArticles(
+        articles.map((article) =>
+          article.category === categoryToDelete.name
+            ? { ...article, category: "Uncategorized" }
+            : article
+        )
+      );
+    }
+
+    saveCategories(updatedCategories);
+    setCategories(updatedCategories);
+    addNotification(
+      `Category ${categoryToDelete.name} was deleted.`,
+      "/admin/categories"
+    );
     setCategoryToDelete(null);
   }
 
@@ -101,7 +133,8 @@ function CategoriesPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this category?</AlertDialogTitle>
             <AlertDialogDescription>
-              “{categoryToDelete?.name}” will be removed. Existing articles will not be deleted.
+              “{categoryToDelete?.name}” will be removed. Existing articles will
+              be moved to Uncategorized.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

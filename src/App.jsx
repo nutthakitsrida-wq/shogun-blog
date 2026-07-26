@@ -1,7 +1,7 @@
 import DashboardLayout, { AdminPlaceholder } from "./pages/DashboardLayout";
 import ProfilePage from "./pages/ProfilePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import ViewPostPage from "./pages/ViewPostPage";
 import LoginPage from "./pages/LoginPage";
@@ -32,10 +32,12 @@ function App() {
         path="/signup"
         element={<SignUpPage />}
       />
-      <Route path="/account" element={<DashboardLayout />}>
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="reset-password" element={<ResetPasswordPage />} />
-      </Route>
+      <Route path="/account" element={<Navigate to="/admin/profile" replace />} />
+      <Route path="/account/profile" element={<Navigate to="/admin/profile" replace />} />
+      <Route
+        path="/account/reset-password"
+        element={<Navigate to="/admin/reset-password" replace />}
+      />
       <Route path="/admin" element={<DashboardLayout />}>
         <Route
           index
