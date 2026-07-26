@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { addNotification } from "@/lib/adminStorage";
 
 function ResetPasswordPage() {
   const [formData, setFormData] = useState({
@@ -110,6 +111,7 @@ function ResetPasswordPage() {
     });
 
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    addNotification("Your password was changed.", "/admin/reset-password");
 
     setMessage("Password updated successfully");
     setIsDialogOpen(false);
@@ -123,8 +125,11 @@ function ResetPasswordPage() {
 
   return (
     <>
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">
+      <div className="max-w-2xl">
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-violet-600">
+          Security
+        </p>
+        <h1 className="mt-2 text-3xl font-black text-slate-900">
           Reset password
         </h1>
 
@@ -132,7 +137,7 @@ function ResetPasswordPage() {
           Change your account password.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 max-w-xl space-y-5">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
           <div>
             <label
               htmlFor="currentPassword"
@@ -219,7 +224,7 @@ function ResetPasswordPage() {
 
           <button
             type="submit"
-            className="rounded-full bg-violet-600 px-6 py-3 font-semibold text-white transition hover:bg-violet-700"
+            className="rounded-xl bg-violet-600 px-6 py-3 font-semibold text-white transition hover:bg-violet-700"
           >
             Reset password
           </button>
