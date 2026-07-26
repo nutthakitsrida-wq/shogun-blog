@@ -65,6 +65,7 @@ function LoginPage() {
       JSON.stringify({
         email: foundUser.email,
         username: foundUser.username,
+        profileImage: foundUser.profileImage || "",
       })
     );
 
