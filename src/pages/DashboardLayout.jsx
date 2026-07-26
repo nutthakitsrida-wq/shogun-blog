@@ -2,6 +2,7 @@ import {
   Bell,
   FileText,
   Folder,
+  Home,
   KeyRound,
   LayoutDashboard,
   LogOut,
@@ -76,6 +77,15 @@ function DashboardLayout() {
             </NavLink>
           ))}
         </nav>
+
+        <NavLink
+          to="/"
+          onClick={() => setIsMenuOpen(false)}
+          className="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-300 transition hover:bg-slate-900 hover:text-white"
+        >
+          <Home size={18} />
+          Back to website
+        </NavLink>
 
         <button
           type="button"
