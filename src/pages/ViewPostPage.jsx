@@ -17,31 +17,6 @@ function ViewPostPage() {
   const [notFound, setNotFound] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
-  async function fetchPost() {
-    setPost(null);
-    setNotFound(false);
-
-    try {
-      const response = await axios.get(
-        `https://blog-post-project-api.vercel.app/posts/${postId}`
-      );
-
-      const apiPost = response.data;
-
-      setPost({
-        ...apiPost,
-        ...plavePostDetails[apiPost.id],
-      });
-    } catch (error) {
-      if (error.response?.status === 404) {
-        setNotFound(true);
-        return;
-      }
-
-      console.log(error);
-    }
-  }
-
   function handleCopyLink() {
     navigator.clipboard.writeText(window.location.href);
     alert("Link copied!");
@@ -52,7 +27,32 @@ function ViewPostPage() {
   }
 
   useEffect(() => {
-    fetchPost();
+    let isCancelled = false;
+
+    axios
+      .get(`https://blog-post-project-api.vercel.app/posts/${postId}`)
+      .then((response) => {
+        if (isCancelled) return;
+        const apiPost = response.data;
+        setNotFound(false);
+        setPost({
+          ...apiPost,
+          ...plavePostDetails[apiPost.id],
+        });
+      })
+      .catch((error) => {
+        if (isCancelled) return;
+        if (error.response?.status === 404) {
+          setNotFound(true);
+          setPost(null);
+          return;
+        }
+        console.error(error);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [postId]);
 
   if (notFound) {

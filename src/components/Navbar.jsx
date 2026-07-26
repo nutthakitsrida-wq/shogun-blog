@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
@@ -10,7 +10,9 @@ import { Bell, Menu } from "lucide-react";
 
 function NavBar() {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(() =>
+    JSON.parse(localStorage.getItem("currentUser"))
+  );
 
   const [notifications, setNotifications] = useState([
     {
@@ -28,14 +30,6 @@ function NavBar() {
   const unreadCount = notifications.filter(
     (notification) => !notification.isRead
   ).length;
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
 
   function handleMobileLogin() {
     navigate("/login");

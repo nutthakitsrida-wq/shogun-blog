@@ -20,53 +20,54 @@ function ArticleSection() {
   const [posts, setPosts] = useState([]);
   const [keyword, setKeyword] = useState("");
 
-  async function fetchPosts() {
-  try {
-    const response = await axios.get(
-      "https://blog-post-project-api.vercel.app/posts",
-      {
-        params: {
-          limit: 6,
-        },
-      }
-    );
-
-    const plavePosts = response.data.posts
-      .filter((post) => plavePostDetails[post.id])
-      .map((post) => ({
-        ...post,
-        ...plavePostDetails[post.id],
-        author: "Shogun",
-        date: new Date(post.date).toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }),
-      }));
-
-    setPosts(plavePosts);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
   useEffect(() => {
-  fetchPosts();
-}, []);
+    let isCancelled = false;
+
+    axios
+      .get("https://blog-post-project-api.vercel.app/posts", {
+        params: { limit: 6 },
+      })
+      .then((response) => {
+        if (isCancelled) return;
+
+        const plavePosts = response.data.posts
+          .filter((post) => plavePostDetails[post.id])
+          .map((post) => ({
+            ...post,
+            ...plavePostDetails[post.id],
+            author: "Shogun",
+            date: new Date(post.date).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+          }));
+
+        setPosts(plavePosts);
+      })
+      .catch((error) => {
+        if (!isCancelled) console.error(error);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
   const filteredPosts = posts.filter((post) => {
-  const matchCategory =
-    selectedCategory === "Highlight" || post.category === selectedCategory;
+    const matchCategory =
+      selectedCategory === "Highlight" || post.category === selectedCategory;
 
-  const searchText = keyword.trim().toLowerCase();
+    const searchText = keyword.trim().toLowerCase();
 
-  const matchKeyword =
-    searchText === "" ||
-    post.title.toLowerCase().includes(searchText) ||
-    post.description.toLowerCase().includes(searchText) ||
-    post.category.toLowerCase().includes(searchText);
+    const matchKeyword =
+      searchText === "" ||
+      post.title.toLowerCase().includes(searchText) ||
+      post.description.toLowerCase().includes(searchText) ||
+      post.category.toLowerCase().includes(searchText);
 
-  return matchCategory && matchKeyword;
-});
+    return matchCategory && matchKeyword;
+  });
   return (
     <section className="mx-auto mt-20 w-[90%] max-w-5xl rounded-3xl bg-white p-8 shadow-2xl">
       <h2 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">
